@@ -1,16 +1,16 @@
 const mysql = require("mysql2");
 
 const db = mysql.createConnection({
-  host: "localhost",
-  user: "MYSQL80",
-  password: "Nico2314!",
-  database: "hotel"
+  host: "mysql.railway.internal",
+  user: "root",
+  password: "olvSSATssNuvCStKPgmKenhXCjSfJPgP",
+  database: "railway",
+  port: 3306
 });
 
-// 👇 evita que crashee en Render
 db.connect((err) => {
   if (err) {
-    console.log("❌ Error MySQL (normal en Render):", err.message);
+    console.log("❌ Error MySQL:", err.message);
   } else {
     console.log("✅ MySQL conectado");
   }
