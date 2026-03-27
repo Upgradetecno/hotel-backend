@@ -1,11 +1,11 @@
 const mysql = require("mysql2");
 
 const db = mysql.createPool({
-  host: "mysql.railway.internal",
+  host: "crossover.proxy.rlwy.net",
   user: "root",
   password: "olvSSATssNuvCStKPgmKenhXCjSfJPgP",
   database: "railway",
-  port: 3306,
+  port: 17043,
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0
