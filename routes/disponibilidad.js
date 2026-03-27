@@ -26,9 +26,9 @@ router.get("/disponibilidad", (req, res) => {
 
   db.query(query, [desde, hasta], (err, results) => {
     if (err) {
-      console.log(err);
-      return res.status(500).json({ error: "Error en la consulta" });
-    }
+  console.log("ERROR SQL:", err);
+  return res.status(500).json({ error: err.message });
+}
 
     res.json(results);
   });
