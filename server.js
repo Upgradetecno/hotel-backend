@@ -10,12 +10,16 @@ app.use(express.json());
 app.use("/api", require("./routes/disponibilidad"));
 app.use("/api", require("./routes/reservas"));
 
-// 🧪 ruta base (para probar)
+// 🧪 rutas de prueba
 app.get("/", (req, res) => {
   res.send("API funcionando 🚀");
 });
 
-// 🔥 puerto dinámico (IMPORTANTE para Render)
+app.get("/test", (req, res) => {
+  res.send("TEST OK");
+});
+
+// 🔥 puerto dinámico
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
