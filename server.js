@@ -6,10 +6,16 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// 🔥 rutas
-app.use("/api/disponibilidad", require("./routes/disponibilidad"));
-app.use("/api/reservas", require("./routes/reservas"));
+// 🔥 rutas correctas
+app.use("/api", require("./routes/disponibilidad"));
+app.use("/api", require("./routes/reservas"));
 
+// 🧪 ruta base (para probar)
+app.get("/", (req, res) => {
+  res.send("API funcionando 🚀");
+});
+
+// 🔥 puerto dinámico (IMPORTANTE para Render)
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {

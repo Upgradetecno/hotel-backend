@@ -2,26 +2,34 @@ const express = require("express");
 const router = express.Router();
 const db = require("../db");
 
-// disponibilidad por rango de fechas
-router.get("/", (req, res) => {
+router.get("/disponibilidad", (req, res) => {
   const { desde, hasta } = req.query;
 
-  const sql = `
-    SELECT h.*
+  const query = `
+    SELECT 
+      h.id,
+      h.nombre,
+      h.capacidad,
+      h.precio_base,
+      h.cantidad_total,
+      (h.cantidad_total - COUNT(r.id)) AS disponibles
     FROM habitaciones h
-    WHERE h.id NOT IN (
-      SELECT r.habitacion_id
-      FROM reservas r
-      WHERE r.estado != 'cancelada'
+    LEFT JOIN reservas r 
+      ON h.id = r.habitacion_id
+      AND r.estado = 'confirmada'
       AND NOT (
-        r.checkout <= ?
-        OR r.checkin >= ?
+        r.fecha_salida <= ?
+        OR r.fecha_entrada >= ?
       )
-    )
+    GROUP BY h.id
   `;
 
-  db.query(sql, [desde, hasta], (err, results) => {
-    if (err) return res.status(500).json(err);
+  db.query(query, [desde, hasta], (err, results) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).json({ error: "Error en la consulta" });
+    }
+
     res.json(results);
   });
 });

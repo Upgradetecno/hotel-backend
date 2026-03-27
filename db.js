@@ -7,7 +7,7 @@ const db = mysql.createConnection({
   database: "hotel"
 });
 
-// 👇 AGREGÁ ESTO
+// 👇 evita que crashee en Render
 db.connect((err) => {
   if (err) {
     console.log("❌ Error MySQL (normal en Render):", err.message);
