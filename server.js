@@ -1,25 +1,24 @@
 const express = require("express");
 const cors = require("cors");
 
+require("dotenv").config();
+
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-// 🔥 rutas correctas
+// 📦 rutas
 app.use("/api", require("./routes/disponibilidad"));
 app.use("/api", require("./routes/reservas"));
+app.use("/api", require("./routes/email"));
 
-// 🧪 rutas de prueba
+// 🧪 test
 app.get("/", (req, res) => {
-  res.send("API funcionando 🚀");
+  res.send("API Hotel funcionando 🚀");
 });
 
-app.get("/test", (req, res) => {
-  res.send("TEST OK");
-});
-
-// 🔥 puerto dinámico
+// 🔥 puerto
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
