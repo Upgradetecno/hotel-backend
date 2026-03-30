@@ -23,4 +23,37 @@ const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
   console.log("Servidor corriendo en puerto " + PORT);
+const jwt = require('jsonwebtoken');
+
+app.post('/api/admin/login', async (req, res) => {
+  try {
+    const { usuario, password } = req.body;
+
+    const [rows] = await db.query(
+      'SELECT * FROM usuarios WHERE usuario = ?',
+      [usuario]
+    );
+
+    if (rows.length === 0) {
+      return res.status(401).json({ error: 'Usuario no encontrado' });
+    }
+
+    const user = rows[0];
+
+    if (password !== user.password) {
+      return res.status(401).json({ error: 'Contraseña incorrecta' });
+    }
+
+    const token = jwt.sign(
+      { id: user.id },
+      'secreto_super_seguro',
+      { expiresIn: '2h' }
+    );
+
+    res.json({ token });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error del servidor' });
+  }
 });
