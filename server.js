@@ -23,6 +23,9 @@ app.get("/", (req, res) => {
 // 🔐 LOGIN ADMIN (FUERA del listen)
 app.post('/api/admin/login', async (req, res) => {
   try {
+
+    console.log("👉 Entró al login");
+
     const { usuario, password } = req.body;
 
     const [rows] = await db.query(
