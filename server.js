@@ -21,6 +21,18 @@ app.get("/", (req, res) => {
 });
 
 // 🔐 LOGIN ADMIN (FUERA del listen)
+app.get('/api/test-db', async (req, res) => {
+  try {
+    console.log("👉 Probando conexión a DB");
+
+    const [rows] = await db.query('SELECT 1');
+
+    res.json({ ok: true });
+  } catch (error) {
+    console.error("DB ERROR:", error);
+    res.status(500).json({ error: error.message });
+  }
+});
 app.post('/api/admin/login', async (req, res) => {
   try {
 
