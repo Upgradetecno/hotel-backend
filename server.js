@@ -1,5 +1,7 @@
 const express = require("express");
 const cors = require("cors");
+const jwt = require("jsonwebtoken");
+const db = require("./db"); 
 
 require("dotenv").config();
 
@@ -18,13 +20,7 @@ app.get("/", (req, res) => {
   res.send("API Hotel funcionando 🚀");
 });
 
-// 🔥 puerto
-const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, () => {
-  console.log("Servidor corriendo en puerto " + PORT);
-const jwt = require('jsonwebtoken');
-
+// 🔐 LOGIN ADMIN (FUERA del listen)
 app.post('/api/admin/login', async (req, res) => {
   try {
     const { usuario, password } = req.body;
@@ -56,4 +52,11 @@ app.post('/api/admin/login', async (req, res) => {
     console.error(error);
     res.status(500).json({ error: 'Error del servidor' });
   }
+});
+
+// 🔥 puerto
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log("Servidor corriendo en puerto " + PORT);
 });
